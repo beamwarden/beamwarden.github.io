@@ -1,52 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>BEAMWARDEN | Ride the Beam</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
-        body { 
-            background: #0a0e14; 
-            color: #58a6ff; 
-            font-family: 'Courier New', monospace; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            margin: 0; 
+        body {
+            /* Replace 'logo.png' with your actual filename */
+            background: url('beamwarden_logo.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #58a6ff;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
         }
-        .container { 
-            border: 1px solid #f0883e; 
-            padding: 3rem; 
-            text-align: center; 
-            box-shadow: 0 0 20px rgba(240, 136, 62, 0.2);
+
+        /* This creates a dark tint so the text is readable */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 14, 20, 0.85);
+            /* Adjust the 0.85 to make it darker/lighter */
+            z-index: -1;
         }
-        h1 { 
-            color: #f0883e; 
-            letter-spacing: 8px; 
+
+        .container {
+            border: 1px solid #f0883e;
+            padding: 3rem;
+            text-align: center;
+            max-width: 800px;
+            background: rgba(10, 14, 20, 0.6);
+            /* Slight background for the box itself */
+            box-shadow: 0 0 30px rgba(240, 136, 62, 0.15);
+        }
+
+        h1 {
+            color: #f0883e;
+            letter-spacing: 8px;
             margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(240, 136, 62, 0.5);
         }
+
         .tagline {
             color: #c9d1d9;
             font-style: italic;
             margin-bottom: 2rem;
             letter-spacing: 2px;
         }
-        .status-box { 
-            color: #238636; 
-            font-size: 0.9rem;
+
+        .status-box {
+            color: #238636;
+            font-size: 0.95rem;
             border-top: 1px solid #30363d;
             padding-top: 1rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        p {
+            margin-bottom: 1rem;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>BEAMWARDEN</h1>
         <p class="tagline">Ride the Beam</p>
         <div class="status-box">
-            <p>Beamwarden is the authoritative control plane for the Beamrider fleet. It manages identity, telemetry, deployments, SSH trust, and configuration for all Beamriders.</p>
-            <p>Beamwarden provides a unified, deterministic, and secure management layer for all Beamrider devices. It centralizes trust, orchestrates deployments, ingests telemetry, and maintains the canonical identity of every node.</p>
+            <p>> Beamwarden is the authoritative control plane for the Beamrider fleet. It manages identity, telemetry,
+                deployments, SSH trust, and configuration for all Beamriders.</p>
+            <p>> Beamwarden provides a unified, deterministic, and secure management layer for all Beamrider devices. It
+                centralizes trust, orchestrates deployments, ingests telemetry, and maintains the canonical identity of
+                every node.</p>
         </div>
     </div>
 </body>
+
 </html>
