@@ -7,15 +7,21 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <style>
         body {
-            /* Replace 'logo.png' with your actual filename */
-            background: url('beamwarden_logo.png') no-repeat center center fixed;
+            background-color: #0a0e14;
+            /* Fallback color */
+            background-image: url('beamwarden_logo.png');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
             background-size: cover;
+
             color: #58a6ff;
             font-family: 'Courier New', monospace;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            /* Changed from height to min-height for better compatibility */
             margin: 0;
             position: relative;
         }
