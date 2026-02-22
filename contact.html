@@ -3,11 +3,52 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>BEAMWARDEN | Contact Us</title>
+    <title>BEAMWARDEN | Ride the Beam</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
+        /* ============================
+           Fade‑in Glow Animation
+        ============================ */
+        @keyframes fadeGlow {
+            0% {
+                opacity: 0;
+                text-shadow: none;
+            }
+
+            60% {
+                opacity: 1;
+                text-shadow:
+                    0 0 4px rgba(88, 166, 255, 0.35),
+                    0 0 10px rgba(88, 166, 255, 0.20);
+            }
+
+            100% {
+                opacity: 1;
+                text-shadow:
+                    0 0 6px rgba(88, 166, 255, 0.45),
+                    0 0 14px rgba(88, 166, 255, 0.25);
+            }
+        }
+
+        .fade-1 {
+            animation: fadeGlow 1.8s ease-out forwards;
+        }
+
+        .fade-2 {
+            animation: fadeGlow 1.8s ease-out forwards;
+            animation-delay: 0.4s;
+        }
+
+        .fade-3 {
+            animation: fadeGlow 1.8s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+
+        /* ============================
+           Production Background (unchanged)
+        ============================ */
         body {
             background-color: #0a0e14;
             background-image: url('beamwarden_logo.png');
@@ -43,94 +84,81 @@
             padding: 2rem;
             text-align: center;
             width: 100%;
-            max-width: 600px;
+            max-width: 800px;
             background: rgba(10, 14, 20, 0.6);
             box-shadow: 0 0 30px rgba(240, 136, 62, 0.15);
         }
 
+        /* ============================
+           Glow Enhancements
+        ============================ */
         h1 {
             color: #f0883e;
             letter-spacing: 6px;
             margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(240, 136, 62, 0.5);
-            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            text-shadow:
+                0 0 6px rgba(240, 136, 62, 0.55),
+                0 0 14px rgba(240, 136, 62, 0.35),
+                0 0 22px rgba(240, 136, 62, 0.25);
         }
 
         .tagline {
             color: #c9d1d9;
             font-style: italic;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             letter-spacing: 2px;
-            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            text-shadow:
+                0 0 4px rgba(88, 166, 255, 0.35),
+                0 0 10px rgba(88, 166, 255, 0.20);
         }
 
-        form {
+        .status-box {
+            color: #238636;
+            font-size: clamp(0.85rem, 2.5vw, 1rem);
+            border-top: 1px solid #30363d;
+            padding-top: 1.5rem;
+            line-height: 1.6;
             text-align: left;
-            margin-top: 1.5rem;
         }
 
-        label {
-            display: block;
-            margin-bottom: 0.4rem;
-            color: #f0883e;
-            font-size: 0.9rem;
+        .status-box p {
+            text-shadow:
+                0 0 4px rgba(35, 134, 54, 0.45),
+                0 0 10px rgba(35, 134, 54, 0.25);
         }
 
-        input,
-        textarea {
-            width: 100%;
-            padding: 0.75rem;
+        p {
             margin-bottom: 1.25rem;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            color: #c9d1d9;
-            font-family: 'Courier New', monospace;
-            font-size: 1rem;
-            border-radius: 4px;
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        button {
+        /* ============================
+           Contact Button
+        ============================ */
+        .contact-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
             background: #f0883e;
             color: #0a0e14;
-            border: none;
-            padding: 0.75rem 2rem;
-            font-family: 'Courier New', monospace;
-            cursor: pointer;
+            text-decoration: none;
             font-weight: bold;
             letter-spacing: 2px;
-            transition: background 0.2s ease;
-            width: 100%;
-            border-radius: 4px;
+            transition: background 0.2s ease, box-shadow 0.25s ease, transform 0.15s ease;
         }
 
-        button:hover {
+        .contact-link:hover {
             background: #ff9f5a;
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 1.5rem;
-            color: #58a6ff;
-            text-decoration: none;
-            font-size: 0.9rem;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
+            box-shadow:
+                0 0 8px rgba(240, 136, 62, 0.55),
+                0 0 18px rgba(240, 136, 62, 0.35);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 480px) {
             .container {
                 padding: 1.5rem;
-            }
-
-            button {
-                padding: 0.9rem;
             }
         }
     </style>
@@ -138,59 +166,28 @@
 
 <body>
     <div class="container">
-        <h1>CONTACT</h1>
-        <p class="tagline">Would You Like to Know More</p>
+        <h1 class="fade-1">BEAMWARDEN</h1>
+        <p class="tagline fade-2">Ride the Beam</p>
 
-        <form id="contactForm">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" required>
+        <div class="status-box fade-3">
+            <p>> Beamwarden is the authoritative control plane for the Beamrider fleet, offered as a fully‑managed PaaS
+                or as a foundation for bespoke development and monitoring solutions. It provides a unified,
+                deterministic, and secure management layer for our customers’ distributed sensing fleets, handling
+                identity, telemetry, deployments, SSH trust, and configuration across every node.</p>
 
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" required>
+            <p>> Beamriders are fully customizable remote‑sensing platforms—modular edge devices built to host whatever
+                sensors, radios, or local logic a mission demands. Instead of acting as generic “hands and eyes,” each
+                Beamrider becomes a purpose‑built field instrument, gathering high‑fidelity environmental data and
+                enforcing Beamwarden’s identity, trust, and deployment model at the edge.</p>
 
-            <label for="org">Organization (optional)</label>
-            <input id="org" name="organization" type="text">
+            <p>> Beamforge is the analytical engine of the Beamwarden ecosystem, transforming raw telemetry into the
+                operational intelligence that powers our customers’ fleets. It refines the environmental and situational
+                data collected by Beamriders into trends, anomalies, and actionable insight, giving organizations a
+                clear, real‑time understanding of the world their distributed sensors are observing.</p>
+        </div>
 
-            <label for="message">How can we help?</label>
-            <textarea id="message" name="message" required></textarea>
-
-            <button type="submit">SUBMIT</button>
-        </form>
-
-        <a class="back-link" href="/">← Back to Beamwarden</a>
+        <a class="contact-link" href="/contact">CONTACT US</a>
     </div>
-
-    <script>
-        const form = document.getElementById("contactForm");
-
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            const payload = {
-                name: document.getElementById("name").value,
-                email: document.getElementById("email").value,
-                organization: document.getElementById("org").value,
-                message: document.getElementById("message").value
-            };
-
-            try {
-                const res = await fetch("https://beamwarden.com/contact", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-
-                if (res.ok) {
-                    alert("Message sent. We'll be in touch.");
-                    form.reset();
-                } else {
-                    alert("Something went wrong. Please try again later.");
-                }
-            } catch (err) {
-                alert("Network error. Please try again later.");
-            }
-        });
-    </script>
 </body>
 
 </html>
