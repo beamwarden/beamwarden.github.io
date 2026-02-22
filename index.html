@@ -7,245 +7,44 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        /* ============================
-           Fade‑in Glow Animation
-        ============================ */
-        @keyframes fadeGlow {
-            0% {
-                opacity: 0;
-                text-shadow: none;
-            }
-
-            60% {
-                opacity: 1;
-                text-shadow:
-                    0 0 4px rgba(88, 166, 255, 0.35),
-                    0 0 10px rgba(88, 166, 255, 0.20);
-            }
-
-            100% {
-                opacity: 1;
-                text-shadow:
-                    0 0 6px rgba(88, 166, 255, 0.45),
-                    0 0 14px rgba(88, 166, 255, 0.25);
-            }
-        }
-
-        .fade-1 {
-            animation: fadeGlow 1.8s ease-out forwards;
-        }
-
-        .fade-2 {
-            animation: fadeGlow 1.8s ease-out forwards;
-            animation-delay: 0.4s;
-        }
-
-        .fade-3 {
-            animation: fadeGlow 1.8s ease-out forwards;
-            animation-delay: 0.8s;
-        }
-
-        /* ============================
-           Starfield Background (Goldilocks)
-        ============================ */
-        body::after,
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -2;
-            background-repeat: repeat;
-            animation: twinkle 14s ease-in-out infinite alternate;
-        }
-
-        /* Small stars — slightly brighter */
-        body::before {
-            opacity: 0.10;
-            /* was 0.05 */
-            background-image:
-                radial-gradient(1.4px 1.4px at 20px 30px, rgba(255, 255, 255, 0.55) 60%, transparent 60%),
-                radial-gradient(1.2px 1.2px at 80px 120px, rgba(255, 255, 255, 0.45) 60%, transparent 60%),
-                radial-gradient(1.2px 1.2px at 200px 250px, rgba(255, 255, 255, 0.45) 60%, transparent 60%);
-            background-size: 350px 350px;
-        }
-
-        /* Larger sparse stars — also slightly brighter */
-        body::after {
-            opacity: 0.08;
-            /* was 0.05 */
-            background-image:
-                radial-gradient(2.2px 2.2px at 150px 80px, rgba(255, 255, 255, 0.50) 70%, transparent 60%),
-                radial-gradient(1.8px 1.8px at 260px 200px, rgba(255, 255, 255, 0.45) 70%, transparent 60%);
-            background-size: 500px 500px;
-        }
-
-        @keyframes twinkle {
-            0% {
-                opacity: 0.06;
-            }
-
-            100% {
-                opacity: 0.12;
-            }
-        }
-
-        /* ============================
-           Base Layout
-        ============================ */
-        body {
-            background-color: #0a0e14;
-            background-image: url('beamwarden_logo.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: cover;
-
-            /* brighten logo slightly */
-            background-blend-mode: overlay;
-
-            font-size: clamp(1.05rem, 3.8vw, 1.2rem);
-            color: #58a6ff;
-            font-family: 'Courier New', monospace;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
-            position: relative;
-        }
-
-        /* Softer overlay (was 0.88, now 0.82) */
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 14, 20, 0.82);
-            z-index: -1;
-        }
-
-        .container {
-            border: 1px solid #f0883e;
-            padding: 2rem;
-            text-align: center;
-            width: 100%;
-            max-width: 800px;
-            background: rgba(10, 14, 20, 0.70);
-            /* slightly brighter */
-            box-shadow: 0 0 30px rgba(240, 136, 62, 0.15);
-        }
-
-        /* ============================
-           Typography & Glow
-        ============================ */
-        h1 {
-            color: #f0883e;
-            letter-spacing: 6px;
-            margin-bottom: 0.5rem;
-            text-shadow:
-                0 0 6px rgba(240, 136, 62, 0.55),
-                0 0 14px rgba(240, 136, 62, 0.35),
-                0 0 22px rgba(240, 136, 62, 0.25);
-            font-size: clamp(1.8rem, 6vw, 3rem);
-        }
-
-        .tagline {
-            color: #c9d1d9;
-            font-style: italic;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-            font-size: clamp(1.05rem, 3.8vw, 1.4rem);
-            text-shadow:
-                0 0 4px rgba(88, 166, 255, 0.35),
-                0 0 12px rgba(88, 166, 255, 0.20);
-        }
-
-        .status-box {
-            color: #238636;
-            font-size: clamp(1rem, 3.6vw, 1.15rem);
-            border-top: 1px solid #30363d;
-            padding-top: 1.5rem;
-            line-height: 1.6;
-            text-align: left;
-        }
-
-        .status-box p {
-            text-shadow:
-                0 0 4px rgba(35, 134, 54, 0.45),
-                0 0 10px rgba(35, 134, 54, 0.25);
-        }
-
-        p {
-            margin-bottom: 1.25rem;
-        }
-
-        /* ============================
-           Contact Button
-        ============================ */
-        .contact-link {
-            display: inline-block;
-            margin-top: 1.5rem;
-            padding: 0.9rem 1.75rem;
-            background: #f0883e;
-            color: #0a0e14;
-            text-decoration: none;
-            font-weight: bold;
-            letter-spacing: 2px;
-            font-size: clamp(1.05rem, 3.8vw, 1.25rem);
-            transition:
-                background 0.2s ease,
-                box-shadow 0.25s ease,
-                transform 0.15s ease;
-        }
-
-        .contact-link:hover {
-            background: #ff9f5a;
-            box-shadow:
-                0 0 8px rgba(240, 136, 62, 0.55),
-                0 0 18px rgba(240, 136, 62, 0.35);
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 1.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="beamwarden.css">
 </head>
 
 <body>
+
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+
     <div class="container">
         <h1 class="fade-1">BEAMWARDEN</h1>
         <p class="tagline fade-2">Ride the Beam</p>
 
         <div class="status-box fade-3">
-            <p>> Beamwarden is the authoritative control plane for the Beamrider fleet, offered as a fully‑managed PaaS
+
+            <p>Beamwarden is the authoritative control plane for the Beamrider fleet, offered as a fully‑managed PaaS
                 or as a foundation for bespoke development and monitoring solutions. It provides a unified,
                 deterministic, and secure management layer for our customers’ distributed sensing fleets, handling
                 identity, telemetry, deployments, SSH trust, and configuration across every node.</p>
 
-            <p>> Beamriders are fully customizable remote‑sensing platforms—modular edge devices built to host whatever
+            <p>Beamriders are fully customizable remote‑sensing platforms—modular edge devices built to host whatever
                 sensors, radios, or local logic a mission demands. Instead of acting as generic “hands and eyes,” each
                 Beamrider becomes a purpose‑built field instrument, gathering high‑fidelity environmental data and
                 enforcing Beamwarden’s identity, trust, and deployment model at the edge.</p>
 
-            <p>> Beamforge is the analytical engine of the Beamwarden ecosystem, transforming raw telemetry into the
+            <p>Beamforge is the analytical engine of the Beamwarden ecosystem, transforming raw telemetry into the
                 operational intelligence that powers our customers’ fleets. It refines the environmental and situational
                 data collected by Beamriders into trends, anomalies, and actionable insight, giving organizations a
                 clear, real‑time understanding of the world their distributed sensors are observing.</p>
+
         </div>
 
-        <a class="contact-link" href="/contact">CONTACT US</a>
+        <p style="margin-top: 2rem; color: #c9d1d9;">Would you like to know more?</p>
+
+        <a class="contact-link" href="/contact/">CONTACT US</a>
+
+        <form action="https://api.beamwarden.com/contact" method="POST" style="display:none;"></form>
+
     </div>
 </body>
 
