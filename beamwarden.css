@@ -311,6 +311,17 @@ button:hover {
     text-shadow: 0 0 6px rgba(88, 166, 255, 0.45);
 }
 
+/* Beamwarden-colored Advent-of-Code-style glow for the > prompt marker */
+.prompt-glow {
+    color: #58a6ff;
+    /* your blue */
+    text-shadow:
+        0 0 6px rgba(88, 166, 255, 0.35),
+        0 0 14px rgba(88, 166, 255, 0.25),
+        0 0 22px rgba(88, 166, 255, 0.18);
+    margin-right: 0.35rem;
+}
+
 /* ============================
    Mobile
 ============================ */
