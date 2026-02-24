@@ -351,6 +351,7 @@ button:hover {
     text-decoration: none;
     margin: 0 0.25rem;
 
+    /* Unvisited: soft glow */
     text-shadow:
         0 0 4px rgba(255, 255, 255, 0.35),
         0 0 10px rgba(255, 255, 255, 0.20);
@@ -358,10 +359,12 @@ button:hover {
     transition: text-shadow 0.25s ease, opacity 0.25s ease;
 }
 
+/* Visited: noticeably stronger glow */
 .footer-nav a:visited {
     text-shadow:
-        0 0 6px rgba(255, 255, 255, 0.55),
-        0 0 14px rgba(255, 255, 255, 0.35);
+        0 0 6px rgba(255, 255, 255, 0.65),
+        0 0 14px rgba(255, 255, 255, 0.45),
+        0 0 22px rgba(255, 255, 255, 0.35);
 }
 
 .footer-nav a:hover {
