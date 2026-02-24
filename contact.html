@@ -28,10 +28,14 @@
             </label>
             <input id="organization" name="organization">
 
-            <div class="honeypot">
-                <label for="company">
-                    Company <span class="optional">(optional)</span>
-                </label>
+            <label for="phone">
+                Phone Number <span class="optional">(optional)</span>
+            </label>
+            <input id="phone" name="phone" type="tel">
+
+            <!-- Proper hidden honeypot -->
+            <div class="honeypot" style="display:none;">
+                <label for="company">Company</label>
                 <input id="company" name="company">
             </div>
 
@@ -52,16 +56,101 @@
         const successBanner = document.getElementById("successBanner");
         const errorBanner = document.getElementById("errorBanner");
 
+        const emailInput = document.getElementById("email");
+        const phoneInput = document.getElementById("phone");
+
+        // Patterns
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phonePattern = /^\+?[0-9\s\-().]{7,20}$/;
+
+        // Validation helpers
+        function validateEmail(value) {
+            return emailPattern.test(value);
+        }
+
+        function validatePhone(value) {
+            return phonePattern.test(value);
+        }
+
+        function showError(message) {
+            errorBanner.textContent = message;
+            errorBanner.style.display = "block";
+        }
+
+        function clearError() {
+            errorBanner.style.display = "none";
+        }
+
+        // Live validation that begins 1500ms after FIRST character
+        function attachLiveValidation(input, validator, message) {
+            input.addEventListener("input", () => {
+                // First character typed → start timer
+                if (!input._hasTyped) {
+                    input._hasTyped = true;
+                    input._timer = setTimeout(() => {
+                        if (input.value && !validator(input.value)) {
+                            input.style.borderColor = "#f85149";
+                            showError(message);
+                        } else {
+                            input.style.borderColor = "";
+                            clearError();
+                        }
+                    }, 1500);
+                    return;
+                }
+
+                // After first validation → debounce normally
+                clearTimeout(input._timer);
+                input._timer = setTimeout(() => {
+                    if (input.value && !validator(input.value)) {
+                        input.style.borderColor = "#f85149";
+                        showError(message);
+                    } else {
+                        input.style.borderColor = "";
+                        clearError();
+                    }
+                }, 1500);
+            });
+        }
+
+        // Attach live validation
+        attachLiveValidation(emailInput, validateEmail, "Please enter a valid email address.");
+        attachLiveValidation(phoneInput, validatePhone, "Please enter a valid international phone number.");
+
+        // Normalize phone to E.164-ish
+        function normalizePhone(raw) {
+            if (!raw) return "";
+            let cleaned = raw.replace(/[^\d+]/g, "");
+            if (!cleaned.startsWith("+")) cleaned = "+1" + cleaned;
+            return cleaned;
+        }
+
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
 
             successBanner.style.display = "none";
-            errorBanner.style.display = "none";
+            clearError();
 
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
 
+            // Honeypot
             if (data.company) return;
+
+            // Email validation
+            if (!validateEmail(data.email)) {
+                showError("Please enter a valid email address.");
+                return;
+            }
+
+            // Phone validation (optional)
+            if (data.phone && !validatePhone(data.phone)) {
+                showError("Please enter a valid international phone number.");
+                return;
+            }
+
+            // Normalize phone
+            data.phone = normalizePhone(data.phone);
 
             try {
                 const response = await fetch(form.action, {
@@ -73,11 +162,17 @@
                 if (response.ok) {
                     successBanner.style.display = "block";
                     form.reset();
+
+                    // Reset live validation state
+                    emailInput._hasTyped = false;
+                    phoneInput._hasTyped = false;
+                    emailInput.style.borderColor = "";
+                    phoneInput.style.borderColor = "";
                 } else {
-                    errorBanner.style.display = "block";
+                    showError("Something went wrong. Please try again.");
                 }
             } catch {
-                errorBanner.style.display = "block";
+                showError("Something went wrong. Please try again.");
             }
         });
     </script>
