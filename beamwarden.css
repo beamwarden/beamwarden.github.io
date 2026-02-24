@@ -50,7 +50,6 @@ body {
     color: #58a6ff;
     font-family: 'Courier New', monospace;
 
-    /* OCR‑B vibe: softer, cleaner */
     font-weight: 400;
     font-size: 1.06rem;
     letter-spacing: 0.15px;
@@ -189,7 +188,7 @@ h1 {
 }
 
 /* ============================
-   Prompt Glow (ONLY the >)
+   Prompt Glow
 ============================ */
 .prompt-glow {
     color: #f0883e;
@@ -234,6 +233,8 @@ h1 {
     display: block;
     font-size: 1.05rem;
     font-weight: 600;
+    margin-top: 0.75rem;
+    /* NEW */
 }
 
 .optional {
@@ -241,6 +242,15 @@ h1 {
     font-style: italic;
     margin-left: 4px;
     opacity: 0.85;
+}
+
+.help-text {
+    display: block;
+    font-size: 0.9rem;
+    color: #8b949e;
+    opacity: 0.85;
+    margin-top: 0.25rem;
+    font-style: italic;
 }
 
 input,
@@ -256,6 +266,9 @@ textarea {
     font-weight: 400;
     letter-spacing: 0.15px;
     font-size: 1.05rem;
+
+    margin-bottom: 1.35rem;
+    /* NEW */
 }
 
 textarea {
@@ -331,5 +344,42 @@ button:hover {
 @media (max-width: 480px) {
     .container {
         padding: 1.5rem;
+    }
+
+    body {
+        color: #7fc0ff;
+    }
+
+    .status-box {
+        color: #2ecf5a;
+    }
+
+    .tagline {
+        color: #e5e9f0;
+    }
+
+    .prompt-glow {
+        color: #ff9f5a;
+        text-shadow:
+            0 0 8px rgba(255, 159, 90, 0.55),
+            0 0 18px rgba(255, 159, 90, 0.35);
+    }
+
+    .footer-nav {
+        margin-top: 2.5rem;
+        font-size: 0.95rem;
+        opacity: 0.7;
+        text-align: center;
+    }
+
+    .footer-nav a {
+        color: #58a6ff;
+        text-decoration: none;
+        margin: 0 0.25rem;
+    }
+
+    .footer-nav a:hover {
+        opacity: 1;
+        text-shadow: 0 0 4px rgba(88, 166, 255, 0.35);
     }
 }
