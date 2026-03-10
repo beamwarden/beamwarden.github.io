@@ -406,3 +406,39 @@ button:hover {
         opacity: 0.9;
     }
 }
+
+/* ============================
+   System Footer Continuity
+============================ */
+.system-footer {
+    margin-top: 4rem;
+    border-top: 1px solid #30363d;
+    /* Matches status-box border */
+    padding-top: 1.5rem;
+    width: 100%;
+}
+
+.status-bar {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Courier New', monospace;
+    font-size: 0.7rem;
+    color: rgba(35, 134, 54, 0.6);
+    /* Soft Green */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.status-bar .signature {
+    color: #238636;
+    text-shadow: 0 0 6px rgba(35, 134, 54, 0.4);
+    font-weight: 700;
+}
+
+@media (max-width: 480px) {
+    .status-bar {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+}
