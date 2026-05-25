@@ -152,7 +152,7 @@
 
             <hr class="section-divider">
 
-            <p class="node-label">Beamrider-0003 &mdash; Live Node &mdash; Multi-Sensor Stack</p>
+            <p class="node-label" id="node-label">Beamrider-0003 &mdash; Live Node &mdash; Multi-Sensor Stack</p>
 
             <section class="product-entry">
                 <p><span class="prompt-glow">&gt;</span> Currently operational: a Raspberry Pi 3 hosting
@@ -161,13 +161,49 @@
                     on every reading cycle — ingested, timestamped, and queryable from day one.</p>
             </section>
 
-            <div class="telemetry-line"><span class="field">temperature_c</span> &nbsp;23.4</div>
-            <div class="telemetry-line"><span class="field">humidity_pct</span> &nbsp;&nbsp;41.2</div>
-            <div class="telemetry-line"><span class="field">accel_x</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.012</div>
-            <div class="telemetry-line"><span class="field">accel_y</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.003</div>
-            <div class="telemetry-line"><span class="field">accel_z</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9.807</div>
-            <div class="telemetry-line"><span class="field">lux</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;318.0</div>
-            <div class="telemetry-line"><span class="field">sound_db</span> &nbsp;&nbsp;&nbsp;&nbsp;44.7</div>
+            <div id="telemetry-feed">
+                <div class="telemetry-line"><span class="field">temperature_c</span> &nbsp;23.4</div>
+                <div class="telemetry-line"><span class="field">humidity_pct</span> &nbsp;&nbsp;41.2</div>
+                <div class="telemetry-line"><span class="field">accel_x</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.012</div>
+                <div class="telemetry-line"><span class="field">accel_y</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.003</div>
+                <div class="telemetry-line"><span class="field">accel_z</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9.807</div>
+                <div class="telemetry-line"><span class="field">lux</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;318.0</div>
+                <div class="telemetry-line"><span class="field">sound_db</span> &nbsp;&nbsp;&nbsp;&nbsp;44.7</div>
+            </div>
+
+            <script>
+            (function () {
+                var ENDPOINT = 'https://app.beamwarden.com/api/v1/public/showcase/';
+                var feed = document.getElementById('telemetry-feed');
+                var label = document.getElementById('node-label');
+
+                function fmtAge(s) {
+                    if (s < 60) return s + 's ago';
+                    if (s < 3600) return Math.round(s / 60) + 'm ago';
+                    if (s < 86400) return Math.round(s / 3600) + 'h ago';
+                    return Math.round(s / 86400) + 'd ago';
+                }
+
+                function render(data) {
+                    var payload = data.payload || {};
+                    var lines = Object.keys(payload)
+                        .filter(function (k) { return typeof payload[k] === 'number'; })
+                        .map(function (k) {
+                            return '<div class="telemetry-line"><span class="field">' +
+                                k + '</span> &nbsp;' + payload[k] + '</div>';
+                        });
+                    if (!lines.length) return;
+                    feed.innerHTML = lines.join('');
+                    label.textContent = label.textContent.split('—')[0].trim() +
+                        ' — ' + fmtAge(data.age_seconds);
+                }
+
+                fetch(ENDPOINT)
+                    .then(function (r) { return r.ok ? r.json() : null; })
+                    .then(function (data) { if (data) render(data); })
+                    .catch(function () {});
+            })();
+            </script>
 
             <hr class="section-divider">
 
