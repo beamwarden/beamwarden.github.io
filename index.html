@@ -69,12 +69,17 @@
             line-height: 1.4;
         }
 
+        #telemetry-feed {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.15rem 2.5rem;
+        }
+
         .telemetry-line {
             font-size: 0.85rem;
             color: #238636;
             opacity: 0.8;
             letter-spacing: 0.5px;
-            margin-bottom: 0.3rem;
             text-shadow: 0 0 4px rgba(35, 134, 54, 0.3);
         }
 
@@ -158,17 +163,25 @@
                 <p><span class="prompt-glow">&gt;</span> Currently operational: a Raspberry Pi 3 running
                     a multi-sensor stack over an Arduino coprocessor — DHT for temperature and humidity,
                     BMP280 for barometric pressure, LIS3DH 3-axis accelerometer, ambient light, and sound
-                    level. All channels arrive as a single structured payload on every reading cycle:
-                    ingested, timestamped, and queryable immediately.</p>
+                    level. The same node runs live SGP4 orbital propagation for the ISS, streaming
+                    real-time position and velocity alongside the physical sensor readings in a single
+                    payload. All channels arrive on every reading cycle: ingested, timestamped, and
+                    queryable immediately.</p>
             </section>
 
             <div id="telemetry-feed">
                 <div class="telemetry-line"><span class="field">Temperature</span> &nbsp;24.5 °C</div>
-                <div class="telemetry-line"><span class="field">Humidity</span> &nbsp;&nbsp;&nbsp;&nbsp;48.1 %</div>
-                <div class="telemetry-line"><span class="field">Pressure</span> &nbsp;&nbsp;&nbsp;&nbsp;1005.4 hPa</div>
-                <div class="telemetry-line"><span class="field">Accel X</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.30 g</div>
-                <div class="telemetry-line"><span class="field">Accel Y</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.85 g</div>
-                <div class="telemetry-line"><span class="field">Accel Z</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.15 g</div>
+                <div class="telemetry-line"><span class="field">ISS Pos X</span> &nbsp;-6592 km</div>
+                <div class="telemetry-line"><span class="field">Humidity</span> &nbsp;48.1 %</div>
+                <div class="telemetry-line"><span class="field">ISS Pos Y</span> &nbsp;-1448 km</div>
+                <div class="telemetry-line"><span class="field">Pressure</span> &nbsp;1005.4 hPa</div>
+                <div class="telemetry-line"><span class="field">ISS Pos Z</span> &nbsp;-436 km</div>
+                <div class="telemetry-line"><span class="field">Accel X</span> &nbsp;0.30 g</div>
+                <div class="telemetry-line"><span class="field">ISS Vel X</span> &nbsp;1.40 km/s</div>
+                <div class="telemetry-line"><span class="field">Accel Y</span> &nbsp;0.85 g</div>
+                <div class="telemetry-line"><span class="field">ISS Vel Y</span> &nbsp;-4.58 km/s</div>
+                <div class="telemetry-line"><span class="field">Accel Z</span> &nbsp;0.15 g</div>
+                <div class="telemetry-line"><span class="field">ISS Vel Z</span> &nbsp;-6.00 km/s</div>
                 <div class="telemetry-line"><span class="field">Light Level</span> &nbsp;3 %</div>
             </div>
 
@@ -179,14 +192,20 @@
                 var nodeLabel = document.getElementById('node-label');
 
                 var FIELDS = [
-                    { key: 'temp_c',        label: 'Temperature',  unit: '°C',  decimals: 1 },
-                    { key: 'humidity_pct',   label: 'Humidity',     unit: '%',   decimals: 1 },
-                    { key: 'pressure_hpa',   label: 'Pressure',     unit: 'hPa', decimals: 1 },
-                    { key: 'ax_g',           label: 'Accel X',      unit: 'g',   decimals: 2 },
-                    { key: 'ay_g',           label: 'Accel Y',      unit: 'g',   decimals: 2 },
-                    { key: 'az_g',           label: 'Accel Z',      unit: 'g',   decimals: 2 },
-                    { key: 'pct',            label: 'Light Level',  unit: '%',   decimals: 0 },
-                    { key: 'sound_db',       label: 'Sound Level',  unit: 'dB',  decimals: 1 },
+                    { key: 'temp_c',       label: 'Temperature', unit: '°C',   decimals: 1, col: 0 },
+                    { key: 'x_km',         label: 'ISS Pos X',   unit: 'km',   decimals: 0, col: 1 },
+                    { key: 'humidity_pct', label: 'Humidity',    unit: '%',    decimals: 1, col: 0 },
+                    { key: 'y_km',         label: 'ISS Pos Y',   unit: 'km',   decimals: 0, col: 1 },
+                    { key: 'pressure_hpa', label: 'Pressure',    unit: 'hPa',  decimals: 1, col: 0 },
+                    { key: 'z_km',         label: 'ISS Pos Z',   unit: 'km',   decimals: 0, col: 1 },
+                    { key: 'ax_g',         label: 'Accel X',     unit: 'g',    decimals: 2, col: 0 },
+                    { key: 'vx_km_s',      label: 'ISS Vel X',   unit: 'km/s', decimals: 2, col: 1 },
+                    { key: 'ay_g',         label: 'Accel Y',     unit: 'g',    decimals: 2, col: 0 },
+                    { key: 'vy_km_s',      label: 'ISS Vel Y',   unit: 'km/s', decimals: 2, col: 1 },
+                    { key: 'az_g',         label: 'Accel Z',     unit: 'g',    decimals: 2, col: 0 },
+                    { key: 'vz_km_s',      label: 'ISS Vel Z',   unit: 'km/s', decimals: 2, col: 1 },
+                    { key: 'pct',          label: 'Light Level', unit: '%',    decimals: 0, col: 0 },
+                    { key: 'sound_db',     label: 'Sound Level', unit: 'dB',   decimals: 1, col: 0 },
                 ];
 
                 function fmtAge(s) {
