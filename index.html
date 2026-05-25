@@ -7,9 +7,9 @@
 
     <title>Beamwarden | Distributed Fleet Control Plane & Edge Analytics</title>
     <meta name="description"
-        content="The authoritative control plane for distributed sensing fleets. Manage identity, telemetry, and edge deployments with Beamrider and Beamforge.">
+        content="Real-world distributed sensing with Beamrider edge nodes and Beamforge analytics. Environmental monitoring, telemetry, and fleet management for teams that need operational visibility.">
     <meta name="keywords"
-        content="Beamwarden, Beamrider, Beamforge, Fleet Management PaaS, Edge Computing, Distributed Sensing, Telemetry Analytics">
+        content="Beamwarden, Beamrider, Beamforge, Fleet Management PaaS, Edge Computing, Distributed Sensing, Environmental Monitoring, Telemetry Analytics">
     <link rel="canonical" href="https://beamwarden.com">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
@@ -24,29 +24,91 @@
       "author": {
         "@type": "Organization",
         "name": "Beamwarden, LLC",
-        "url": "https://beamwarden.com",
-        "parentOrganization": {
-          "@type": "Organization",
-          "name": "LogicEngine",
-          "url": "https://logicengine.studio"
-        }
-      },
-      "hasPart": [
-        {
-          "@type": "Product",
-          "name": "Beamrider",
-          "description": "Modular edge remote-sensing platforms."
-        },
-        {
-          "@type": "Product",
-          "name": "Beamforge",
-          "description": "Analytical telemetry engine."
-        }
-      ]
+        "url": "https://beamwarden.com"
+      }
     }
     </script>
 
     <link rel="stylesheet" href="beamwarden.css">
+
+    <style>
+        .use-case-label {
+            color: #f0883e;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            opacity: 0.85;
+        }
+
+        .use-case-title {
+            color: #c9d1d9;
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 6px rgba(201, 209, 217, 0.25);
+        }
+
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+        }
+
+        .sensor-cell {
+            border: 1px solid #30363d;
+            padding: 0.75rem;
+            background: rgba(35, 134, 54, 0.05);
+            text-align: left;
+        }
+
+        .sensor-cell .sensor-name {
+            color: #f0883e;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .sensor-cell .sensor-desc {
+            color: #8b949e;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .telemetry-line {
+            font-size: 0.85rem;
+            color: #238636;
+            opacity: 0.75;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.35rem;
+            text-shadow: 0 0 4px rgba(35, 134, 54, 0.3);
+        }
+
+        .telemetry-line .field {
+            color: #58a6ff;
+        }
+
+        .telemetry-line .value {
+            color: #238636;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid #30363d;
+            margin: 1.5rem 0;
+        }
+
+        .node-label {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: #8b949e;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -62,43 +124,79 @@
         </header>
 
         <main class="status-box fade-3">
+
+            <p class="use-case-label">Use Case</p>
+            <p class="use-case-title">Multi-Sensor Environmental Monitoring</p>
+
             <section class="product-entry">
-                <p> <span class="prompt-glow">&gt;</span> <strong>Beamwarden</strong> is the authoritative control plane
-                    for the Beamrider
-                    fleet, offered as a fully‑managed PaaS or as a foundation for bespoke development and monitoring
-                    solutions. It provides a unified, deterministic, and secure management layer for our customers’
-                    distributed sensing fleets, handling identity, telemetry, deployments, SSH trust, and configuration
-                    across every node.</p>
+                <p><span class="prompt-glow">&gt;</span> A facility team needs continuous environmental telemetry
+                    across a building — temperature and humidity for compliance, vibration for early equipment fault
+                    detection, ambient light for occupancy, and sound levels for safety thresholds. They need one
+                    system that ingests all of it, maintains device identity, and surfaces live and historical
+                    analytics without requiring a data engineering team to stand it up.</p>
             </section>
 
             <section class="product-entry">
-                <p> <span class="prompt-glow">&gt;</span> <strong>Beamriders</strong> are fully customizable
-                    remote‑sensing platforms—modular
-                    edge devices built to host whatever sensors, radios, or local logic a mission demands. Instead of
-                    acting
-                    as generic “hands and eyes,” each Beamrider becomes a purpose‑built field instrument, gathering
-                    high‑fidelity environmental data and enforcing Beamwarden’s identity, trust, and deployment model at
-                    the
-                    edge.</p>
+                <p><span class="prompt-glow">&gt;</span> A single <strong>Beamrider</strong> node hosts the full
+                    sensor stack. It authenticates to <strong>Beamwarden</strong> with a hardware-bound bearer token,
+                    streams multi-channel payloads over HTTPS, and reports liveness continuously. <strong>Beamforge</strong>
+                    surfaces live rolling statistics and historical trend analysis — no additional infrastructure,
+                    no custom integrations.</p>
             </section>
+
+            <hr class="section-divider">
+
+            <p class="node-label">Beamrider-0003 &mdash; Live Node &mdash; Operational</p>
+
+            <div class="sensor-grid">
+                <div class="sensor-cell">
+                    <div class="sensor-name">Temperature / Humidity</div>
+                    <div class="sensor-desc">HS3003 via I²C. Calibrated readings for environmental compliance and HVAC correlation.</div>
+                </div>
+                <div class="sensor-cell">
+                    <div class="sensor-name">Accelerometer</div>
+                    <div class="sensor-desc">3-axis vibration and tilt. Early indicator of equipment stress, motor imbalance, or structural events.</div>
+                </div>
+                <div class="sensor-cell">
+                    <div class="sensor-name">Ambient Light</div>
+                    <div class="sensor-desc">Lux readings for occupancy inference, daylight harvesting, and anomaly detection in sealed environments.</div>
+                </div>
+                <div class="sensor-cell">
+                    <div class="sensor-name">Sound Level</div>
+                    <div class="sensor-desc">Continuous dB monitoring for safety threshold alerting and equipment noise signatures.</div>
+                </div>
+            </div>
+
+            <hr class="section-divider">
+
+            <p class="node-label">Sample Telemetry Payload</p>
+
+            <div class="telemetry-line"><span class="field">temperature_c</span> &nbsp;23.4</div>
+            <div class="telemetry-line"><span class="field">humidity_pct</span> &nbsp;&nbsp;41.2</div>
+            <div class="telemetry-line"><span class="field">accel_x</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.012</div>
+            <div class="telemetry-line"><span class="field">accel_y</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.003</div>
+            <div class="telemetry-line"><span class="field">accel_z</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9.807</div>
+            <div class="telemetry-line"><span class="field">lux</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;318.0</div>
+            <div class="telemetry-line"><span class="field">sound_db</span> &nbsp;&nbsp;&nbsp;&nbsp;44.7</div>
+
+            <hr class="section-divider">
 
             <section class="product-entry">
-                <p> <span class="prompt-glow">&gt;</span> <strong>Beamforge</strong> is the analytical engine of the
-                    Beamwarden ecosystem,
-                    transforming raw telemetry into the operational intelligence that powers your fleets. It refines the
-                    environmental and situational data collected by Beamriders into trends, anomalies, and actionable
-                    insight, giving organizations a clear, real‑time understanding of the world their distributed
-                    sensors
-                    are observing.</p>
+                <p><span class="prompt-glow">&gt;</span> Beamwarden handles device identity, token rotation, liveness
+                    scoring, and secure telemetry ingest. Beamforge delivers live rolling statistics and arbitrary
+                    date-range analytics from day one. The same platform scales from one node to a fleet of hundreds
+                    across multiple sites, business units, and sensor types — with no change to the integration model.</p>
             </section>
 
-            <p class="ghost-center">Would you like to know more?</p>
+            <p class="ghost-center">Ready to deploy your fleet?</p>
+
         </main>
 
         <nav class="actions">
             <a class="contact-link" href="/contact.html">CONTACT</a>
 
             <div class="footer-nav">
+                <a href="/about">About</a> ·
                 <a href="/why">Why Beamwarden</a> ·
                 <a href="/contact">Contact</a>
             </div>
