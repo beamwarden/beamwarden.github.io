@@ -23,16 +23,16 @@
 }
 
 .fade-1 {
-    animation: fadeGlow 1.8s ease-out forwards;
+    animation: fadeGlow 1.8s ease-out both;
 }
 
 .fade-2 {
-    animation: fadeGlow 1.8s ease-out forwards;
+    animation: fadeGlow 1.8s ease-out both;
     animation-delay: 0.4s;
 }
 
 .fade-3 {
-    animation: fadeGlow 1.8s ease-out forwards;
+    animation: fadeGlow 1.8s ease-out both;
     animation-delay: 0.8s;
 }
 
