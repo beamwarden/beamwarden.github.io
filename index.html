@@ -155,27 +155,39 @@
             <p class="node-label" id="node-label">Beamrider-0003 &mdash; Live Node &mdash; Multi-Sensor Stack</p>
 
             <section class="product-entry">
-                <p><span class="prompt-glow">&gt;</span> Currently operational: a Raspberry Pi 3 hosting
-                    temperature/humidity (HS3003), 3-axis accelerometer, ambient light, and sound level sensors
-                    via an Arduino coprocessor over UART. All channels arrive as a single structured payload
-                    on every reading cycle — ingested, timestamped, and queryable from day one.</p>
+                <p><span class="prompt-glow">&gt;</span> Currently operational: a Raspberry Pi 3 running
+                    a multi-sensor stack over an Arduino coprocessor — DHT for temperature and humidity,
+                    BMP280 for barometric pressure, LIS3DH 3-axis accelerometer, ambient light, and sound
+                    level. All channels arrive as a single structured payload on every reading cycle:
+                    ingested, timestamped, and queryable immediately.</p>
             </section>
 
             <div id="telemetry-feed">
-                <div class="telemetry-line"><span class="field">temperature_c</span> &nbsp;23.4</div>
-                <div class="telemetry-line"><span class="field">humidity_pct</span> &nbsp;&nbsp;41.2</div>
-                <div class="telemetry-line"><span class="field">accel_x</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.012</div>
-                <div class="telemetry-line"><span class="field">accel_y</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-0.003</div>
-                <div class="telemetry-line"><span class="field">accel_z</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9.807</div>
-                <div class="telemetry-line"><span class="field">lux</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;318.0</div>
-                <div class="telemetry-line"><span class="field">sound_db</span> &nbsp;&nbsp;&nbsp;&nbsp;44.7</div>
+                <div class="telemetry-line"><span class="field">Temperature</span> &nbsp;24.5 °C</div>
+                <div class="telemetry-line"><span class="field">Humidity</span> &nbsp;&nbsp;&nbsp;&nbsp;48.1 %</div>
+                <div class="telemetry-line"><span class="field">Pressure</span> &nbsp;&nbsp;&nbsp;&nbsp;1005.4 hPa</div>
+                <div class="telemetry-line"><span class="field">Accel X</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.30 g</div>
+                <div class="telemetry-line"><span class="field">Accel Y</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.85 g</div>
+                <div class="telemetry-line"><span class="field">Accel Z</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.15 g</div>
+                <div class="telemetry-line"><span class="field">Light Level</span> &nbsp;3 %</div>
             </div>
 
             <script>
             (function () {
                 var ENDPOINT = 'https://app.beamwarden.com/api/v1/public/showcase/';
                 var feed = document.getElementById('telemetry-feed');
-                var label = document.getElementById('node-label');
+                var nodeLabel = document.getElementById('node-label');
+
+                var FIELDS = [
+                    { key: 'temp_c',        label: 'Temperature',  unit: '°C',  decimals: 1 },
+                    { key: 'humidity_pct',   label: 'Humidity',     unit: '%',   decimals: 1 },
+                    { key: 'pressure_hpa',   label: 'Pressure',     unit: 'hPa', decimals: 1 },
+                    { key: 'ax_g',           label: 'Accel X',      unit: 'g',   decimals: 2 },
+                    { key: 'ay_g',           label: 'Accel Y',      unit: 'g',   decimals: 2 },
+                    { key: 'az_g',           label: 'Accel Z',      unit: 'g',   decimals: 2 },
+                    { key: 'pct',            label: 'Light Level',  unit: '%',   decimals: 0 },
+                    { key: 'sound_db',       label: 'Sound Level',  unit: 'dB',  decimals: 1 },
+                ];
 
                 function fmtAge(s) {
                     if (s < 60) return s + 's ago';
@@ -186,15 +198,16 @@
 
                 function render(data) {
                     var payload = data.payload || {};
-                    var lines = Object.keys(payload)
-                        .filter(function (k) { return typeof payload[k] === 'number'; })
-                        .map(function (k) {
+                    var lines = FIELDS
+                        .filter(function (f) { return typeof payload[f.key] === 'number'; })
+                        .map(function (f) {
+                            var val = payload[f.key].toFixed(f.decimals) + ' ' + f.unit;
                             return '<div class="telemetry-line"><span class="field">' +
-                                k + '</span> &nbsp;' + payload[k] + '</div>';
+                                f.label + '</span> &nbsp;' + val + '</div>';
                         });
                     if (!lines.length) return;
                     feed.innerHTML = lines.join('');
-                    label.textContent = label.textContent.split('—')[0].trim() +
+                    nodeLabel.textContent = nodeLabel.textContent.split('—')[0].trim() +
                         ' — ' + fmtAge(data.age_seconds);
                 }
 
