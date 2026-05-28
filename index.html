@@ -240,10 +240,14 @@
             <hr class="section-divider">
 
             <section class="product-entry">
-                <p><span class="prompt-glow">&gt;</span> The same platform manages a Geiger counter ingesting
-                    radiation counts alongside the multi-sensor node — same identity model, same API, same
-                    analytics engine. The fleet scales from one sensor type to dozens, across one site or many,
-                    without changing the integration model.</p>
+                <p><span class="prompt-glow">&gt;</span> Three nodes are operational today: a MightyOhm Geiger
+                    counter streaming radiation counts, the multi-sensor node above, and a Pi Sense HAT running
+                    magnetometer, accelerometer, gyroscope, temperature, humidity, and barometric pressure in
+                    parallel. All three use the same identity model, the same ingest API, and the same
+                    <strong>Beamforge</strong> analytics engine — Beamforge runs a live Unscented Kalman Filter
+                    against every sensor's telemetry automatically, flagging anomalies as they occur with no
+                    per-sensor configuration. The fleet scales from one node to many, across heterogeneous
+                    hardware and sensor types, without changing the integration model.</p>
             </section>
 
             <p class="ghost-center">Ready to deploy your fleet?</p>
