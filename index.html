@@ -239,15 +239,17 @@
 
             <hr class="section-divider">
 
+            <p class="node-label">Reference Deployment &mdash; 13 Registered Nodes</p>
+
             <section class="product-entry">
-                <p><span class="prompt-glow">&gt;</span> Three nodes are operational today: a MightyOhm Geiger
-                    counter streaming radiation counts, the multi-sensor node above, and a Pi Sense HAT running
-                    magnetometer, accelerometer, gyroscope, temperature, humidity, and barometric pressure in
-                    parallel. All three use the same identity model, the same ingest API, and the same
-                    <strong>Beamforge</strong> analytics engine — Beamforge runs a live Unscented Kalman Filter
-                    against every sensor's telemetry automatically, flagging anomalies as they occur with no
-                    per-sensor configuration. The fleet scales from one node to many, across heterogeneous
-                    hardware and sensor types, without changing the integration model.</p>
+                <p><span class="prompt-glow">&gt;</span> The three sensor nodes above are examples, not the ceiling.
+                    Thirteen Beamriders are registered in production today, on the same identity model and the same
+                    ingest API: the Geiger counter, the multi-sensor node, a Pi Sense HAT, and a five-node
+                    Raspberry Pi cluster used as a physical fault-injection testbed, validating <strong>Beamforge</strong>
+                    against real hardware and real network conditions before it runs against your fleet. Every node
+                    runs the same live Unscented Kalman Filter automatically, flagging anomalies as they occur with
+                    no per-sensor configuration. This is a reference deployment: the same integration model scales
+                    across heterogeneous hardware and sensor types without changing.</p>
             </section>
 
             <p class="ghost-center">Ready to deploy your fleet?</p>
